@@ -6,6 +6,7 @@ class Game
         @choice_category = nil
         @panel = nil
         @game_over = false
+        @points = 0
     end
 
     def start
@@ -13,6 +14,8 @@ class Game
         puts 'You must choice one of 4 categories to start play'
         puts 'You have 3 chances for win. One wrong choice and you lost one chance, but if you hit two times you win one chance, anyway the maximum of chances is 3.'
         puts 'Anytime you can try to guess the word typing GUESS, but if you are wrong, you lost.'
+        break_line
+        puts "You have #{@points} points"
         break_line
         
         @categories.each_with_index { |category, index| puts "#{index} - #{category.get_name}" }
@@ -42,30 +45,34 @@ class Game
             @panel.show_panel
             puts 'Next letter?'
             try = gets.chomp
-            
-            if('GUESS'.casecmp(try) == 0)
-                puts 'What is your guess?'
-                guess = gets.chomp
 
-                if(@panel.get_word.casecmp(guess) == 0)
-                    end_game(true)
-                else
-                    end_game(false)
-                end
-            else
-                if(@panel.get_chosen_words.include? try)
-                    puts 'You already tried this letter'
-                else
-                    @panel.increment_panel(try)
-                end
-            end
-
-            check_game_over
-
-            if(@game_over)
-                end_game
-            else
+            if(''.casecmp(try) == 0 || ' '.casecmp(try) == 0 )
                 make_play
+            else
+                if('GUESS'.casecmp(try) == 0)
+                    puts 'What is your guess?'
+                    guess = gets.chomp
+    
+                    if(@panel.get_word.casecmp(guess) == 0)
+                        end_game(true)
+                    else
+                        end_game(false)
+                    end
+                else
+                    if(@panel.get_chosen_words.include? try)
+                        puts 'You already tried this letter'
+                    else
+                        @panel.increment_panel(try)
+                    end
+                end
+    
+                check_game_over
+    
+                if(@game_over)
+                    end_game
+                else
+                    make_play
+                end
             end
         end
 
@@ -86,6 +93,14 @@ class Game
         end 
 
         def end_game
-            puts @lost ? 'You win' : 'You loose'
+            percentage_wrong_letters =  (@panel.get_wrong_letters * 100) / @panel.get_total_plays 
+            percentage_right_letters = 100 - percentage_wrong_letters
+
+            @points = percentage_right_letters - percentage_wrong_letters + @points
+
+            message = @lost ? 'You win' : 'You loose'
+            puts "Game ended! The word was: #{@panel.get_word}. #{message}"
+            sleep(1)
+            start
         end
 end

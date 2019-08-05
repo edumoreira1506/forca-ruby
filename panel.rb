@@ -1,6 +1,8 @@
 class Panel
     def initialize(word)
         @word = word
+        @wrong_letters = 0
+        @right_letters = 0
         @chars = []
         @chosen_words = []
         @chances = 3
@@ -13,6 +15,8 @@ class Panel
         @contains = get_word.include? letter
 
         if(@contains)
+            @right_letters = @right_letters + 1
+
             if(@last_try && @chances < 3)
                 @chances = @chances + 1
             end
@@ -26,6 +30,7 @@ class Panel
                 i = i + 1
             end
         else
+            @wrong_letters = @wrong_letters + 1
             @chances = @chances - 1
         end
 
@@ -36,6 +41,18 @@ class Panel
         while (@word.length > @chars.length) do
             @chars.push('_') 
         end
+    end
+
+    def get_total_plays
+        @wrong_letters + @right_letters
+    end
+
+    def get_wrong_letters
+        @wrong_letters
+    end
+
+    def get_right_letters
+        @right_letters
     end
 
     def get_chars
