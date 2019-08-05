@@ -1,11 +1,11 @@
-h1. CALCULATING PUNCTUATION
+CALCULATING PUNCTUATION
 
 In the end of all game the system calculate your points. The logic is in base of the percentage
 of right choices and wrong choices. The formule is:
 
 PERCENTAGE OF RIGHT POINTS - PERCENTAGE OF WRONG POINTS = POINTS
 
-The most points than you can have in a single game is 100. Example:
+The most points than you can have in a single game is 100 and the minimum is -100. Example:
 
 The word is BIRD. And you won the game with this sequence: [J,A,B,O,I,R,D]. So, you did
 7 choices, that is 100 percent. The calc:

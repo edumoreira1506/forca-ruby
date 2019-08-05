@@ -15,11 +15,13 @@ class Game
         puts 'You must choice one of 4 categories to start play'
         puts 'You have 3 chances for win. One wrong choice and you lost one chance, but if you hit two times you win one chance, anyway the maximum of chances is 3.'
         puts 'Anytime you can try to guess the word typing GUESS, but if you are wrong, you lost.'
+        
         break_line
         puts "You have #{@points} points"
         break_line
         
         @categories.each_with_index { |category, index| puts "#{index} - #{category.get_name}" }
+        
         index_category = gets.to_i
         is_valid_category(index_category)
     end
@@ -28,8 +30,8 @@ class Game
         def is_valid_category(index_category)
             if(@categories[index_category])
                 @choice_category = @categories[index_category]
-                word = randomize_word
-                @panel.start(word)
+
+                randomize_word
                 make_play
             else
                 start
@@ -39,11 +41,13 @@ class Game
         def randomize_word
             amount_of_words = @choice_category.get_words.length
             random_index = rand(0..amount_of_words - 1)
-            @choice_category.get_words[random_index]
+            word = @choice_category.get_words[random_index]
+            @panel.start(word)
         end
 
         def make_play
             @panel.show_panel
+            
             puts 'Next letter?'
             try = gets.chomp
 
