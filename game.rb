@@ -3,13 +3,14 @@ load 'panel.rb'
 class Game
     def initialize(categories)
         @categories = categories
-        @choice_category = nil
-        @panel = nil
-        @game_over = false
+        @panel = Panel.new
         @points = 0
     end
 
     def start
+        @game_over = false
+        @choice_category = nil
+        
         puts 'Welcome to hangman game! Rules:'
         puts 'You must choice one of 4 categories to start play'
         puts 'You have 3 chances for win. One wrong choice and you lost one chance, but if you hit two times you win one chance, anyway the maximum of chances is 3.'
@@ -28,7 +29,7 @@ class Game
             if(@categories[index_category])
                 @choice_category = @categories[index_category]
                 word = randomize_word
-                @panel = Panel.new(word)
+                @panel.start(word)
                 make_play
             else
                 start

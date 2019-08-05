@@ -1,12 +1,12 @@
 class Panel
-    def initialize(word)
+    def start(word)
+        @last_try = false
         @word = word
         @wrong_letters = 0
         @right_letters = 0
         @chars = []
         @chosen_words = []
         @chances = 3
-        @last_try = false
         clean_panel
     end
 
