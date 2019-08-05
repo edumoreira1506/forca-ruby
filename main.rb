@@ -1,10 +1,10 @@
 load 'category.rb'
 load 'game.rb'
 
-animals = Category.new(['cavalo','passarinho','macaco','peixe','tubarão'], 'Animais')
-vehicles = Category.new(['carro','bicicleta','moto','caminhão','skate'], 'Veículos')
-objects = Category.new(['prato','relogio','copo','óculos','garfo'], 'Objetos')
-drinks = Category.new(['água','refrigerante','suco','cerveja','vinho'], 'Bebidas')
+animals = Category.new(['horse','bird','monkey','fish','shark'], 'Animals')
+vehicles = Category.new(['car','bike','motorcycle','truck','skate'], 'Vehicles')
+objects = Category.new(['plate','clock','cup','glasses','fork'], 'Objetos')
+drinks = Category.new(['water','soda','juice','beer','wine'], 'Bebidas')
 
 categories = [animals, vehicles, objects, drinks]
 game = Game.new(categories)

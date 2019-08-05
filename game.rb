@@ -38,18 +38,6 @@ class Game
             @choice_category.get_words[random_index]
         end
 
-        def game_over
-            if(@panel.get_chars.include? '_' && @panel.get_chances == 0)
-                puts 'You lose'
-                @game_over = true
-            end
-
-            if(!@panel.get_chars.include? '_')
-                puts 'You win!'
-                @game_over = true
-            end
-        end
-
         def make_play
             @panel.show_panel
             puts 'Next letter?'
@@ -58,6 +46,7 @@ class Game
             if('GUESS'.casecmp(try) == 0)
                 puts 'What is your guess?'
                 guess = gets.chomp
+
                 if(@panel.get_word.casecmp(guess) == 0)
                     end_game(true)
                 else
@@ -72,15 +61,31 @@ class Game
             end
 
             check_game_over
+
+            if(@game_over)
+                end_game
+            else
+                make_play
+            end
         end
 
+        def check_game_over
+            if(@panel.get_chances == 0)
+                @game_over = true
+                @lost = false
+            end
+
+            if(!@panel.get_chars.include? '_')
+                @game_over = true
+                @lost = true
+            end
+        end
 
         def break_line
             puts '==================='
         end 
 
-        def end_game(game_over)
-            @game_over = game_over
-            puts @game_over ? 'You win!' : 'You loose!'
+        def end_game
+            puts @lost ? 'You win' : 'You loose'
         end
 end
