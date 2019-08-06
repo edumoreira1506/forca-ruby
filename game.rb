@@ -106,7 +106,7 @@ class Game
             percentage_wrong_letters =  (@panel.get_wrong_letters * 100) / @panel.get_total_plays 
             percentage_right_letters = 100 - percentage_wrong_letters
 
-            @points = percentage_right_letters - percentage_wrong_letters + @points
+            @points += percentage_right_letters - percentage_wrong_letters
 
             message = @lost ? 'You loose' : 'You win'
             puts "Game ended! The word was: #{@panel.get_word}. #{message}"

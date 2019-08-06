@@ -12,29 +12,28 @@ class Panel
 
     def increment_panel(letter)
         @chosen_words.push(letter)
-        @contains = get_word.include? letter
 
-        if(@contains)
-            @right_letters = @right_letters + 1
+        if(get_word.include? letter)
+            @right_letters += 1
 
             if(@last_try && @chances < 3)
-                @chances = @chances + 1
+                @chances += 1
             end
 
             i = 0
-            while i != @word.length
+            while i < @word.length
                 if(@word[i] == letter)
                     @chars[i] = letter
                 end
                 
-                i = i + 1
+                i += 1
             end
         else
-            @wrong_letters = @wrong_letters + 1
-            @chances = @chances - 1
+            @wrong_letters += 1
+            @chances -= 1
         end
 
-        @last_try = @contains
+        @last_try = get_word.include? letter
     end
 
     def clean_panel
