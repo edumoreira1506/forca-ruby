@@ -58,10 +58,13 @@ class Game
                     puts 'What is your guess?'
                     guess = gets.chomp
     
+                    @game_over = true
+
                     if(@panel.get_word.casecmp(guess) == 0)
-                        end_game(true)
+                        @points = @points + 100
+                        @lost = false
                     else
-                        end_game(false)
+                        @lost = true
                     end
                 else
                     if(@panel.get_chosen_words.include? try)
@@ -82,14 +85,16 @@ class Game
         end
 
         def check_game_over
-            if(@panel.get_chances == 0)
-                @game_over = true
-                @lost = false
-            end
+            if(!@game_over)
+                if(@panel.get_chances == 0)
+                    @game_over = true
+                    @lost = true
+                end
 
-            if(!@panel.get_chars.include? '_')
-                @game_over = true
-                @lost = true
+                if(!@panel.get_chars.include? '_')
+                    @game_over = true
+                    @lost = false
+                end
             end
         end
 
@@ -103,7 +108,7 @@ class Game
 
             @points = percentage_right_letters - percentage_wrong_letters + @points
 
-            message = @lost ? 'You win' : 'You loose'
+            message = @lost ? 'You loose' : 'You win'
             puts "Game ended! The word was: #{@panel.get_word}. #{message}"
             sleep(1)
             start
