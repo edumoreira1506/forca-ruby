@@ -1,11 +1,20 @@
+require 'json'
+
 load 'category.rb'
 load 'game.rb'
 
-animals = Category.new(['horse','bird','monkey','fish','shark'], 'Animals')
-vehicles = Category.new(['car','bike','motorcycle','truck','skate'], 'Vehicles')
-objects = Category.new(['plate','clock','cup','glasses','fork'], 'Objects')
-drinks = Category.new(['water','soda','juice','beer','wine'], 'Drinks')
+file = File.read('database.json')
+categories_hash = JSON.parse(file)
 
-categories = [animals, vehicles, objects, drinks]
+categories = []
+
+categories_hash.keys.each do |category|     
+    category_name = category
+    items_category = categories_hash[category]
+
+    object_category = Category.new(items_category, category_name)
+    categories.push(object_category)
+end 
+
 game = Game.new(categories)
 game.start

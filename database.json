@@ -1,0 +1,6 @@
+{
+    "animals": ["horse","bird","monkey","fish","shark"],
+    "vehicles":["car","bike","motorcycle","truck","skate"],
+    "objects":["plate","clock","cup","glasses","fork"],
+    "drinks":["water","soda","juice","beer","wine"]
+}
