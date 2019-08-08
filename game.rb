@@ -31,8 +31,12 @@ class Game
 
             if @word.include? letter
 
-                if @last_try && @chances < 3
-                    @chances += 1
+                if @last_try
+                    @points += 20
+            
+                    if @chances < 3
+                        @chances += 1
+                    end
                 end
 
                 i = 0
