@@ -20,7 +20,7 @@ class Game
         puts "You have #{@points} points"
         break_line
         
-        @categories.each_with_index { |category, index| puts "#{index} - #{category.get_name}" }
+        @categories.each_with_index { |category, index| puts "#{index} - #{category.name}" }
         
         index_category = gets.to_i
         is_valid_category(index_category)
@@ -39,9 +39,9 @@ class Game
         end
 
         def randomize_word
-            amount_of_words = @choice_category.get_words.length
+            amount_of_words = @choice_category.words.length
             random_index = rand(0..amount_of_words - 1)
-            word = @choice_category.get_words[random_index]
+            word = @choice_category.words[random_index]
             @panel.start(word)
         end
 
@@ -60,14 +60,14 @@ class Game
     
                     @game_over = true
 
-                    if(@panel.get_word.casecmp(guess) == 0)
+                    if(@panel.word.casecmp(guess) == 0)
                         @points = @points + 100
                         @lost = false
                     else
                         @lost = true
                     end
                 else
-                    if(@panel.get_chosen_words.include? try)
+                    if(@panel.chosen_words.include? try)
                         puts 'You already tried this letter'
                     else
                         @panel.increment_panel(try)
@@ -86,12 +86,12 @@ class Game
 
         def check_game_over
             if(!@game_over)
-                if(@panel.get_chances == 0)
+                if(@panel.chances == 0)
                     @game_over = true
                     @lost = true
                 end
 
-                if(!@panel.get_chars.include? '_')
+                if(!@panel.chars.include? '_')
                     @game_over = true
                     @lost = false
                 end
@@ -103,13 +103,13 @@ class Game
         end 
 
         def end_game
-            percentage_wrong_letters =  (@panel.get_wrong_letters * 100) / @panel.get_total_plays 
+            percentage_wrong_letters =  (@panel.wrong_letters * 100) / @panel.total_plays 
             percentage_right_letters = 100 - percentage_wrong_letters
 
             @points += percentage_right_letters - percentage_wrong_letters
 
             message = @lost ? 'You loose' : 'You win'
-            puts "Game ended! The word was: #{@panel.get_word}. #{message}"
+            puts "Game ended! The word was: #{@panel.word}. #{message}"
             sleep(1)
             start
         end

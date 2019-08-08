@@ -1,4 +1,6 @@
 class Panel
+    attr_reader :wrong_letters, :right_letters, :chars, :word, :chances, :chosen_words
+
     def start(word)
         @last_try = false
         @word = word
@@ -13,7 +15,7 @@ class Panel
     def increment_panel(letter)
         @chosen_words.push(letter)
 
-        if(get_word.include? letter)
+        if(word.include? letter)
             @right_letters += 1
 
             if(@last_try && @chances < 3)
@@ -33,7 +35,7 @@ class Panel
             @chances -= 1
         end
 
-        @last_try = get_word.include? letter
+        @last_try = word.include? letter
     end
 
     def clean_panel
@@ -42,38 +44,14 @@ class Panel
         end
     end
 
-    def get_total_plays
+    def total_plays
         @wrong_letters + @right_letters
-    end
-
-    def get_wrong_letters
-        @wrong_letters
-    end
-
-    def get_right_letters
-        @right_letters
-    end
-
-    def get_chars
-        @chars
-    end
-
-    def get_word
-        @word
-    end
-
-    def get_chances
-        @chances
-    end
-
-    def get_chosen_words
-        @chosen_words
     end
 
     def show_panel
         puts '==================='
-        puts "You have #{get_chances} chances."
-        puts "Your tries: #{get_chosen_words.to_s}."
-        puts "Word: #{get_chars.join('')}."
+        puts "You have #{chances} chances."
+        puts "Your tries: #{chosen_words.to_s}."
+        puts "Word: #{chars.join('')}."
     end
 end
