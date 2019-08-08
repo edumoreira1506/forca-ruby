@@ -11,24 +11,17 @@ class Game
         @game_over = false
         @choice_category = nil
         
-        puts 'Welcome to hangman game! Rules:'
-        puts 'You must choice one of 4 categories to start play'
-        puts 'You have 3 chances for win. One wrong choice and you lost one chance, but if you hit two times you win one chance, anyway the maximum of chances is 3.'
-        puts 'Anytime you can try to guess the word typing GUESS, but if you are wrong, you lost.'
-        
-        break_line
-        puts "You have #{@points} points"
-        break_line
+        @panel.welcome_text
         
         @categories.each_with_index { |category, index| puts "#{index} - #{category.name}" }
         
         index_category = gets.to_i
-        is_valid_category(index_category)
+        valid_category?(index_category)
     end
 
     private
-        def is_valid_category(index_category)
-            if(@categories[index_category])
+        def valid_category?(index_category)
+            if @categories[index_category]
                 @choice_category = @categories[index_category]
 
                 randomize_word
@@ -51,23 +44,23 @@ class Game
             puts 'Next letter?'
             try = gets.chomp
 
-            if(''.casecmp(try) == 0 || ' '.casecmp(try) == 0 )
+            if ''.casecmp(try) == 0 || ' '.casecmp(try) == 0
                 make_play
             else
-                if('GUESS'.casecmp(try) == 0)
+                if'GUESS'.casecmp(try) == 0
                     puts 'What is your guess?'
                     guess = gets.chomp
     
                     @game_over = true
 
-                    if(@panel.word.casecmp(guess) == 0)
+                    if@panel.word.casecmp(guess) == 0
                         @points = @points + 100
                         @lost = false
                     else
                         @lost = true
                     end
                 else
-                    if(@panel.chosen_words.include? try)
+                    if@panel.chosen_words.include? try
                         puts 'You already tried this letter'
                     else
                         @panel.increment_panel(try)
@@ -85,13 +78,13 @@ class Game
         end
 
         def check_game_over
-            if(!@game_over)
-                if(@panel.chances == 0)
+            if !@game_over
+                if @panel.chances == 0
                     @game_over = true
                     @lost = true
                 end
 
-                if(!@panel.chars.include? '_')
+                if !@panel.chars.include? '_'
                     @game_over = true
                     @lost = false
                 end
